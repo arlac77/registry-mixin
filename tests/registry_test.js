@@ -59,7 +59,9 @@ describe('RegistrarMixin', () => {
 
   testRegistry('class', Interceptor, {
     withCreateInstance: true,
-    factoryType: 'new'
+    factoryType: 'new',
+    hasBeenRegistered: i =>
+      i.hasBeenRegisteredCalled = true
   });
 
   testRegistry('function', InterceptorFactory, {
@@ -68,7 +70,6 @@ describe('RegistrarMixin', () => {
     'factoryMethod': 'createInstance'
   });
 });
-
 
 function testRegistry(name, factory, registryOptions) {
   describe(`${name} entries`, () => {
@@ -84,6 +85,12 @@ function testRegistry(name, factory, registryOptions) {
     describe('registered event', () => {
       it('send', () => assert.equal(registered, factory));
     });
+
+    if (registryOptions.hasBeenRegistered) {
+      describe('hasBeenRegistered', () => {
+        it('is called', () => assert.equal(factory.hasBeenRegisteredCalled, true));
+      });
+    }
 
     it('has one entry', () => assert.equal(object.interceptors.t1, factory));
 

@@ -2,6 +2,8 @@
 "use strict";
 
 /**
+ * TODO: withEvents, withPromises
+ *
  * Register named factories
  * register<<Name>>(Factory)
  * unregister<<Name>>(Factory)
@@ -68,26 +70,27 @@ exports.defineRegistryProperties = function (object, name, options) {
 			const name = toBeRegistered.type || toBeRegistered.name;
 
 			const old = registry[name];
+			let p;
+
 			if (old) {
 				if (old === toBeRegistered) {
 					return;
 				}
 
-				if (options.willBeUnregistered) {
-					// TODO what to do with the promise ?
-					options.willBeUnregistered(old);
-				}
-				this.emit(eventNameUnRegistered, old);
+				p = options.willBeUnregistered ? options.willBeUnregistered(old) : Promise.resolve();
+				p = p.then(() => this.emit(eventNameUnRegistered, old));
+			} else {
+				p = Promise.resolve();
 			}
 
 			if (options.hasBeenRegistered) {
-				// TODO what to do with the promise ?
-				options.hasBeenRegistered(toBeRegistered);
+				p = p.then(options.hasBeenRegistered(toBeRegistered));
 			}
 
+			//return p.then(() => {
 			registry[name] = toBeRegistered;
-
 			this.emit(eventNameRegistered, toBeRegistered);
+			//});
 		}
 	};
 
