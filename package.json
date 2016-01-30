@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kronos-Integration/registry-mixin.git"
+    "url": "git+https://github.com/arlac77/registry-mixin.git"
   },
   "bugs": {
-    "url": "https://github.com/Kronos-Integration/registry-mixin/issues"
+    "url": "https://github.com/arlac77/registry-mixin/issues"
   },
-  "homepage": "https://github.com/Kronos-Integration/registry-mixin#readme",
+  "homepage": "https://github.com/arlac77/registry-mixin#readme",
   "dependencies": {},
   "devDependencies": {
     "chai": "3.5.0",
