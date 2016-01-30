@@ -60,8 +60,8 @@ describe('RegistrarMixin', () => {
   testRegistry('class', Interceptor, {
     withCreateInstance: true,
     factoryType: 'new',
-    hasBeenRegistered: i =>
-      i.hasBeenRegisteredCalled = true
+    hasBeenRegistered: i => i.hasBeenRegisteredCalled = true,
+    willBeUnregistered: i => i.willBeUnregisteredCalled = true
   });
 
   testRegistry('function', InterceptorFactory, {
@@ -115,6 +115,12 @@ function testRegistry(name, factory, registryOptions) {
         assert.equal(object.interceptors.t1, undefined);
         assert.equal(unregistered, factory);
       });
+
+      if (registryOptions.willBeUnregistered) {
+        describe('willBeUnregistered', () => {
+          it('is called', () => assert.equal(factory.willBeUnregisteredCalled, true));
+        });
+      }
     });
 
     object.registerInterceptor(factory);
