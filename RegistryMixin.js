@@ -87,10 +87,10 @@ exports.defineRegistryProperties = function (object, name, options) {
 				p = p.then(options.hasBeenRegistered(toBeRegistered));
 			}
 
-			//return p.then(() => {
-			registry[name] = toBeRegistered;
-			this.emit(eventNameRegistered, toBeRegistered);
-			//});
+			return p.then(() => {
+				registry[name] = toBeRegistered;
+				this.emit(eventNameRegistered, toBeRegistered);
+			});
 		}
 	};
 
@@ -108,7 +108,7 @@ exports.defineRegistryProperties = function (object, name, options) {
 					this.emit(eventNameUnRegistered, old);
 				});
 			}
-			
+
 			return Promise.reject();
 		}
 	};
