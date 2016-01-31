@@ -25,7 +25,7 @@ class Interceptor {
 }
 
 const InterceptorFactory = {
-  type: 't1',
+  name: 't1',
   createInstance(arg1, arg2) {
     if (arg2) {
       return {

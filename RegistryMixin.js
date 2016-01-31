@@ -67,8 +67,7 @@ exports.defineRegistryProperties = function (object, name, options) {
 
 	properties['register' + ucFirstName] = {
 		value: function (toBeRegistered) {
-			const name = toBeRegistered.type || toBeRegistered.name;
-
+			const name = toBeRegistered.name;
 			const old = registry[name];
 			let p;
 
