@@ -86,7 +86,10 @@ function testRegistry(name, factory, registryOptions) {
     let registered;
     object.addListener('interceptorRegistered', r => registered = r);
 
-    object.registerInterceptor(factory).then(() => {
+    object.registerInterceptor(factory).then(f => {
+      describe('register delivers', () => {
+        it('fullfilled promise', () => assert.equal(f, factory));
+      });
 
       describe('registered event', () => {
         it('send', () => assert.equal(registered, factory));

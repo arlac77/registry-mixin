@@ -74,13 +74,13 @@ exports.defineRegistryProperties = function (object, name, options) {
 
 			if (old) {
 				if (old === toBeRegistered) {
-					return Promise.resolve();
+					return Promise.resolve(toBeRegistered);
 				}
 
 				p = options.willBeUnregistered ? options.willBeUnregistered(old) : Promise.resolve();
 				p = p.then(() => this.emit(eventNameUnRegistered, old));
 			} else {
-				p = Promise.resolve();
+				p = Promise.resolve(toBeRegistered);
 			}
 
 			if (options.hasBeenRegistered) {
@@ -90,6 +90,7 @@ exports.defineRegistryProperties = function (object, name, options) {
 			return p.then(() => {
 				registry[name] = toBeRegistered;
 				this.emit(eventNameRegistered, toBeRegistered);
+				return toBeRegistered;
 			});
 		}
 	};
