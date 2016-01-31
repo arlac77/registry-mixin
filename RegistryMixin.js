@@ -17,7 +17,7 @@
  *                  "<functionName>"										// a function name to call
  *                  function(name, arg1, arg2, arg3){}  // A given function which will be called
  *  willBeUnregistered(object) // called before unregistering object
- *  hasBeenRegistered(object)  // called after registering object
+ *  hasBeenRegistered (object)  // called after registering object
  * }
  *
  */
@@ -74,7 +74,7 @@ exports.defineRegistryProperties = function (object, name, options) {
 
 			if (old) {
 				if (old === toBeRegistered) {
-					return;
+					return Promise.resolve();
 				}
 
 				p = options.willBeUnregistered ? options.willBeUnregistered(old) : Promise.resolve();
@@ -99,15 +99,17 @@ exports.defineRegistryProperties = function (object, name, options) {
 			const old = registry[name];
 
 			if (old !== undefined) {
-				if (options.willBeUnregistered) {
-					// TODO what to do with the promise ?
-					options.willBeUnregistered(old);
-				}
+				let p = options.willBeUnregistered ?
+					options.willBeUnregistered(old) :
+					Promise.resolve();
 
-				delete registry[name];
-
-				this.emit(eventNameUnRegistered, old);
+				return p.then(() => {
+					delete registry[name];
+					this.emit(eventNameUnRegistered, old);
+				});
 			}
+			
+			return Promise.reject();
 		}
 	};
 
