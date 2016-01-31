@@ -24,7 +24,28 @@ class Interceptor {
   }
 }
 
+class Interceptor2 {
+  static get name() {
+    return "t1";
+  }
+}
+
 const InterceptorFactory = {
+  name: 't1',
+  createInstance(arg1, arg2) {
+    if (arg2) {
+      return {
+        arg1: arg2
+      };
+    }
+
+    return {
+      arg1: arg1
+    };
+  }
+};
+
+const InterceptorFactory2 = {
   name: 't1',
   createInstance(arg1, arg2) {
     if (arg2) {
@@ -57,7 +78,7 @@ describe('RegistrarMixin', () => {
     it('no entries', () => assert.deepEqual(object.interceptors, {}));
   });
 
-  testRegistry('class', Interceptor, {
+  testRegistry('class', Interceptor, Interceptor2, {
     withCreateInstance: true,
     factoryType: 'new',
     hasBeenRegistered: i => {
@@ -70,14 +91,14 @@ describe('RegistrarMixin', () => {
     }
   });
 
-  testRegistry('function', InterceptorFactory, {
+  testRegistry('function', InterceptorFactory, InterceptorFactory2, {
     withCreateInstance: true,
     factoryType: 'object',
     'factoryMethod': 'createInstance'
   });
 });
 
-function testRegistry(name, factory, registryOptions) {
+function testRegistry(name, factory, factory2, registryOptions) {
   describe(`${name} entries`, () => {
     const object = new MyEmitter();
 
@@ -139,8 +160,16 @@ function testRegistry(name, factory, registryOptions) {
         }
       });
 
-      object.registerInterceptor(factory);
-      it('one entry still there', () => assert.equal(object.interceptors.t1, factory));
+      describe('2. time registration', () => {
+        it('one entry still there', done => {
+          object.registerInterceptor(factory).then(f => {
+            assert.equal(object.interceptors.t1, factory);
+            object.registerInterceptor(factory2).then(f => {
+              done();
+            });
+          });
+        });
+      });
     });
   });
 }
