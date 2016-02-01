@@ -46,10 +46,18 @@ exports.defineRegistryProperties = function (object, name, options) {
 			// TODO use ... if node supports it
 			value: options.factoryType === 'new' ? function (name, arg1, arg2, arg3) {
 				const Clazz = registry[name];
-				return new Clazz(arg1, arg2, arg3);
+				if (Clazz) {
+					return new Clazz(arg1, arg2, arg3);
+				} else {
+					throw new Error(`Could not find class '${name}' in registry '${ucFirstName}'`);
+				}
 			} : function (name, arg1, arg2, arg3) {
 				const factory = registry[name];
-				return factory[options.factoryMethod](arg1, arg2, arg3);
+				if (factory) {
+					return factory[options.factoryMethod](arg1, arg2, arg3);
+				} else {
+					throw new Error(`Could not find factory '${name}' in registry '${ucFirstName}'`);
+				}
 			}
 		};
 
@@ -57,10 +65,18 @@ exports.defineRegistryProperties = function (object, name, options) {
 			// TODO use ... if node supports it
 			value: options.factoryType === 'new' ? function (identifier, arg1, arg2, arg3) {
 				const Clazz = registry[identifier.type];
-				return new Clazz(identifier, arg1, arg2, arg3);
+				if (Clazz) {
+					return new Clazz(identifier, arg1, arg2, arg3);
+				} else {
+					throw new Error(`Could not find class '${identifier.type}' in registry '${ucFirstName}'`);
+				}
 			} : function (identifier, arg1, arg2, arg3) {
 				const factory = registry[identifier.type];
-				return factory[options.factoryMethod](identifier, arg1, arg2, arg3);
+				if (factory) {
+					return factory[options.factoryMethod](identifier, arg1, arg2, arg3);
+				} else {
+					throw new Error(`Could not find factory '${identifier.type}' in registry '${ucFirstName}'`);
+				}
 			}
 		};
 	}
