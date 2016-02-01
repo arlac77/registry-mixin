@@ -2,7 +2,6 @@
 "use strict";
 
 /**
- * TODO: withEvents
  *
  * Register named factories
  * register<<Name>>(Factory)
