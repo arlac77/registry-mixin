@@ -79,6 +79,7 @@ describe('RegistrarMixin', () => {
   });
 
   testRegistry('class', Interceptor, Interceptor2, {
+    withEvents: true,
     withCreateInstance: true,
     factoryType: 'new',
     hasBeenRegistered: i => {
@@ -92,11 +93,20 @@ describe('RegistrarMixin', () => {
   });
 
   testRegistry('function', InterceptorFactory, InterceptorFactory2, {
+    withEvents: true,
+    withCreateInstance: true,
+    factoryType: 'object',
+    'factoryMethod': 'createInstance'
+  });
+
+  testRegistry('function', InterceptorFactory, InterceptorFactory2, {
+    withEvents: false,
     withCreateInstance: true,
     factoryType: 'object',
     'factoryMethod': 'createInstance'
   });
 });
+
 
 function testRegistry(name, factory, factory2, registryOptions) {
   describe(`${name} entries`, () => {
@@ -112,9 +122,12 @@ function testRegistry(name, factory, factory2, registryOptions) {
         it('fullfilled promise', () => assert.equal(f, factory));
       });
 
-      describe('registered event', () => {
-        it('send', () => assert.equal(registered, factory));
-      });
+      if (registryOptions.withEvents) {
+        describe('registered event', () => {
+          it('send', () => assert.equal(registered, factory));
+        });
+      }
+
       if (registryOptions.hasBeenRegistered) {
         describe('hasBeenRegistered', () => {
           it('is called', () => assert.equal(factory.hasBeenRegisteredCalled, true));
@@ -145,7 +158,9 @@ function testRegistry(name, factory, factory2, registryOptions) {
           object.addListener('interceptorUnregistered', ur => unregistered = ur);
           object.unregisterInterceptor("t1").then(() => {
             assert.equal(object.interceptors.t1, undefined);
-            assert.equal(unregistered, factory);
+            if (registryOptions.withEvents) {
+              assert.equal(unregistered, factory);
+            }
             done();
           });
         });

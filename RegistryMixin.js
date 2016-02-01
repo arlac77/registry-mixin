@@ -2,7 +2,7 @@
 "use strict";
 
 /**
- * TODO: withEvents, withPromises
+ * TODO: withEvents
  *
  * Register named factories
  * register<<Name>>(Factory)
@@ -93,7 +93,9 @@ exports.defineRegistryProperties = function (object, name, options) {
 				}
 
 				p = options.willBeUnregistered ? options.willBeUnregistered(old) : Promise.resolve();
-				p = p.then(() => this.emit(eventNameUnRegistered, old));
+				if (options.withEvents) {
+					p = p.then(() => this.emit(eventNameUnRegistered, old));
+				}
 			} else {
 				p = Promise.resolve(toBeRegistered);
 			}
@@ -104,7 +106,9 @@ exports.defineRegistryProperties = function (object, name, options) {
 
 			return p.then(() => {
 				registry[name] = toBeRegistered;
-				this.emit(eventNameRegistered, toBeRegistered);
+				if (options.withEvents) {
+					this.emit(eventNameRegistered, toBeRegistered);
+				}
 				return toBeRegistered;
 			});
 		}
@@ -121,7 +125,10 @@ exports.defineRegistryProperties = function (object, name, options) {
 
 				return p.then(() => {
 					delete registry[name];
-					this.emit(eventNameUnRegistered, old);
+					if (options.withEvents) {
+						this.emit(eventNameUnRegistered, old);
+					}
+					return Promise.resolve(old);
 				});
 			}
 
