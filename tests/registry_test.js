@@ -186,7 +186,7 @@ function testRegistry(name, factory, factory2, registryOptions) {
               assert.equal(object.interceptors.t1, factory);
               object.registerInterceptor(factory2).then(f => {
                 done();
-              });
+              }).catch(done);
             });
           });
         });

@@ -80,7 +80,7 @@ exports.defineRegistryProperties = function (object, name, options) {
 		};
 	}
 
-	const registerFunction = function (toBeRegistered, name) {
+	const registerFunction = (toBeRegistered, name) => {
 		const old = registry[name];
 		let p;
 
@@ -91,7 +91,7 @@ exports.defineRegistryProperties = function (object, name, options) {
 
 			p = options.willBeUnregistered ? options.willBeUnregistered(old) : Promise.resolve();
 			if (options.withEvents) {
-				p = p.then(() => this.emit(eventNameUnRegistered, old));
+				p = p.then(() => object.emit(eventNameUnRegistered, old));
 			}
 		} else {
 			p = Promise.resolve(toBeRegistered);
@@ -104,7 +104,7 @@ exports.defineRegistryProperties = function (object, name, options) {
 		return p.then(() => {
 			registry[name] = toBeRegistered;
 			if (options.withEvents) {
-				this.emit(eventNameRegistered, toBeRegistered);
+				object.emit(eventNameRegistered, toBeRegistered);
 			}
 			return toBeRegistered;
 		});
@@ -115,9 +115,7 @@ exports.defineRegistryProperties = function (object, name, options) {
 	};
 
 	properties['register' + ucFirstName] = {
-		value: function (toBeRegistered) {
-			return registerFunction(toBeRegistered, toBeRegistered.name);
-		}
+		value: toBeRegistered => registerFunction(toBeRegistered, toBeRegistered.name)
 	};
 
 	properties['unregister' + ucFirstName] = {
