@@ -80,36 +80,43 @@ exports.defineRegistryProperties = function (object, name, options) {
 		};
 	}
 
+	const registerFunction = function (toBeRegistered, name) {
+		const old = registry[name];
+		let p;
+
+		if (old) {
+			if (old === toBeRegistered) {
+				return Promise.resolve(toBeRegistered);
+			}
+
+			p = options.willBeUnregistered ? options.willBeUnregistered(old) : Promise.resolve();
+			if (options.withEvents) {
+				p = p.then(() => this.emit(eventNameUnRegistered, old));
+			}
+		} else {
+			p = Promise.resolve(toBeRegistered);
+		}
+
+		if (options.hasBeenRegistered) {
+			p = p.then(options.hasBeenRegistered(toBeRegistered));
+		}
+
+		return p.then(() => {
+			registry[name] = toBeRegistered;
+			if (options.withEvents) {
+				this.emit(eventNameRegistered, toBeRegistered);
+			}
+			return toBeRegistered;
+		});
+	};
+
+	properties['register' + ucFirstName + 'As'] = {
+		value: registerFunction
+	};
+
 	properties['register' + ucFirstName] = {
 		value: function (toBeRegistered) {
-			const name = toBeRegistered.name;
-			const old = registry[name];
-			let p;
-
-			if (old) {
-				if (old === toBeRegistered) {
-					return Promise.resolve(toBeRegistered);
-				}
-
-				p = options.willBeUnregistered ? options.willBeUnregistered(old) : Promise.resolve();
-				if (options.withEvents) {
-					p = p.then(() => this.emit(eventNameUnRegistered, old));
-				}
-			} else {
-				p = Promise.resolve(toBeRegistered);
-			}
-
-			if (options.hasBeenRegistered) {
-				p = p.then(options.hasBeenRegistered(toBeRegistered));
-			}
-
-			return p.then(() => {
-				registry[name] = toBeRegistered;
-				if (options.withEvents) {
-					this.emit(eventNameRegistered, toBeRegistered);
-				}
-				return toBeRegistered;
-			});
+			return registerFunction(toBeRegistered, toBeRegistered.name);
 		}
 	};
 
