@@ -1,7 +1,7 @@
 {
   "name": "registry-mixin",
   "version": "0.0.0-semantic-release",
-  "description": "provides registry methods",
+  "description": "Register objects and factories for later lookup",
   "main": "RegistryMixin.js",
   "keywords": [
     "lookup",
