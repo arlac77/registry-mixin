@@ -11,6 +11,10 @@
 [![downloads](http://img.shields.io/npm/dm/registry-mixin.svg?style=flat-square)](https://npmjs.org/package/registry-mixin)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
+registry-mixin
+===
+Register objects and factories for later lookup
+
 install
 =======
 
