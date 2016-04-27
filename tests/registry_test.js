@@ -1,7 +1,7 @@
 /* global describe, it, xit */
 /* jslint node: true, esnext: true */
 
-"use strict";
+'use strict';
 
 const chai = require('chai'),
   assert = chai.assert,
@@ -13,7 +13,7 @@ const chai = require('chai'),
 
 class Interceptor {
   static get name() {
-    return "t1";
+    return 't1';
   }
 
   constructor(arg1, arg2) {
@@ -26,7 +26,7 @@ class Interceptor {
 
 class Interceptor2 {
   static get name() {
-    return "t1";
+    return 't1';
   }
 }
 
@@ -141,27 +141,27 @@ function testRegistry(name, factory, factory2, registryOptions) {
 
         it('has one entry', () => assert.equal(object.interceptors.t1, factory));
         describe('create instance', () => {
-          const inst1 = object.createInterceptorInstance("t1", "arg1");
-          it('created', () => assert.equal(inst1.arg1, "arg1"));
+          const inst1 = object.createInterceptorInstance('t1', 'arg1');
+          it('created', () => assert.equal(inst1.arg1, 'arg1'));
         });
 
         describe('create instance from config', () => {
           const inst1 = object.createInterceptorInstanceFromConfig({
-            type: "t1",
-            "someOtherArgs": 1
-          }, "arg1");
-          it('created', () => assert.equal(inst1.arg1, "arg1"));
+            type: 't1',
+            someOtherArgs: 1
+          }, 'arg1');
+          it('created', () => assert.equal(inst1.arg1, 'arg1'));
         });
 
         describe('unregister', () => {
           it('nonexisting entry', done => {
-            object.unregisterInterceptor("txyz").then(done, () => done());
+            object.unregisterInterceptor('txyz').then(done, () => done());
           });
 
           it('entry removed', done => {
             let unregistered;
             object.addListener('interceptorUnregistered', ur => unregistered = ur);
-            object.unregisterInterceptor("t1").then(() => {
+            object.unregisterInterceptor('t1').then(() => {
               assert.equal(object.interceptors.t1, undefined);
               if (registryOptions.withEvents) {
                 assert.equal(unregistered, factory);

@@ -1,5 +1,5 @@
 /* jslint node: true, esnext: true */
-"use strict";
+'use strict';
 
 /**
  *
@@ -12,8 +12,8 @@
  *
  * Format of the options
  * {
- *	"factoryType" : "new"																// A key word which will call a constructor
- *                  "<functionName>"										// a function name to call
+ *	'factoryType' : 'new'																// A key word which will call a constructor
+ *                  '<functionName>'										// a function name to call
  *                  function(name, arg1, arg2, arg3){}  // A given function which will be called
  *  willBeUnregistered(object) // called before unregistering object
  *  hasBeenRegistered (object)  // called after registering object
@@ -28,7 +28,7 @@ exports.defineRegistryProperties = function (object, name, options) {
 	}
 
 	const ucFirstName = name.charAt(0).toUpperCase() + name.slice(1);
-	const pluralLowercaseName = options.pluralName ? options.pluralName : name + "s";
+	const pluralLowercaseName = options.pluralName ? options.pluralName : name + 's';
 	const eventNameRegistered = name + 'Registered';
 	const eventNameUnRegistered = name + 'Unregistered';
 
