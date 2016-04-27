@@ -42,18 +42,17 @@ exports.defineRegistryProperties = function (object, name, options) {
 
 	if (options.withCreateInstance) {
 		properties['create' + ucFirstName + 'Instance'] = {
-			// TODO use ... if node supports it
-			value: options.factoryType === 'new' ? function (name, arg1, arg2, arg3) {
+			value: options.factoryType === 'new' ? function (name, ...args) {
 				const Clazz = registry[name];
 				if (Clazz) {
-					return new Clazz(arg1, arg2, arg3);
+					return new Clazz(...args);
 				} else {
 					throw new Error(`Could not find class '${name}' in registry '${ucFirstName}'`);
 				}
-			} : function (name, arg1, arg2, arg3) {
+			} : function (name, ...args) {
 				const factory = registry[name];
 				if (factory) {
-					return factory[options.factoryMethod](arg1, arg2, arg3);
+					return factory[options.factoryMethod](...args);
 				} else {
 					throw new Error(`Could not find factory '${name}' in registry '${ucFirstName}'`);
 				}
@@ -61,18 +60,17 @@ exports.defineRegistryProperties = function (object, name, options) {
 		};
 
 		properties['create' + ucFirstName + 'InstanceFromConfig'] = {
-			// TODO use ... if node supports it
-			value: options.factoryType === 'new' ? function (identifier, arg1, arg2, arg3) {
+			value: options.factoryType === 'new' ? function (identifier, ...args) {
 				const Clazz = registry[identifier.type];
 				if (Clazz) {
-					return new Clazz(identifier, arg1, arg2, arg3);
+					return new Clazz(identifier, ...args);
 				} else {
 					throw new Error(`Could not find class '${identifier.type}' in registry '${ucFirstName}'`);
 				}
-			} : function (identifier, arg1, arg2, arg3) {
+			} : function (identifier, ...args) {
 				const factory = registry[identifier.type];
 				if (factory) {
-					return factory[options.factoryMethod](identifier, arg1, arg2, arg3);
+					return factory[options.factoryMethod](identifier, ...args);
 				} else {
 					throw new Error(`Could not find factory '${identifier.type}' in registry '${ucFirstName}'`);
 				}

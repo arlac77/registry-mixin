@@ -40,7 +40,7 @@
   }],
   "license": "BSD-2-Clause",
   "engines": {
-    "node": ">=5"
+    "node": ">=6"
   },
   "config": {
     "commitizen": {
