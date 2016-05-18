@@ -20,12 +20,8 @@
  * }
  *
  */
-exports.defineRegistryProperties = function (object, name, options) {
+exports.defineRegistryProperties = function (object, name, options = {}) {
 	const properties = {};
-
-	if (options === undefined) {
-		options = {};
-	}
 
 	const ucFirstName = name.charAt(0).toUpperCase() + name.slice(1);
 	const pluralLowercaseName = options.pluralName ? options.pluralName : name + 's';
