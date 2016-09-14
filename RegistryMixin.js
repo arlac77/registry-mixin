@@ -117,17 +117,17 @@ exports.defineRegistryProperties = function (object, name, options = {}) {
 			const old = registry[name];
 
 			if (old !== undefined) {
-				let p = options.willBeUnregistered ?
-					options.willBeUnregistered(old) :
-					Promise.resolve();
-
-				return p.then(() => {
+				const cleanup = () => {
 					delete registry[name];
 					if (options.withEvents) {
 						this.emit(eventNameUnRegistered, old);
 					}
 					return Promise.resolve(old);
-				});
+				};
+				
+				return options.willBeUnregistered ?
+					options.willBeUnregistered(old).then(cleanup) :
+					cleanup();
 			}
 
 			return Promise.reject();
