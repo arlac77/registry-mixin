@@ -96,14 +96,14 @@ describe('RegistrarMixin', () => {
     withEvents: true,
     withCreateInstance: true,
     factoryType: 'object',
-    'factoryMethod': 'createInstance'
+    factoryMethod: 'createInstance'
   });
 
   testRegistry('function', InterceptorFactory, InterceptorFactory2, {
     withEvents: false,
     withCreateInstance: true,
     factoryType: 'object',
-    'factoryMethod': 'createInstance'
+    factoryMethod: 'createInstance'
   });
 });
 
