@@ -9,7 +9,7 @@ const chai = require('chai'),
   should = chai.should(),
   events = require('events'),
   util = require('util'),
-  rgm = require('../RegistryMixin');
+  rgm = require('../dist/RegistryMixin');
 
 class Interceptor {
   static get name() {

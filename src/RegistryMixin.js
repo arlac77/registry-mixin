@@ -20,7 +20,7 @@
  * }
  *
  */
-exports.defineRegistryProperties = function (object, name, options = {}) {
+function defineRegistryProperties(object, name, options = {}) {
 	const properties = {};
 
 	const ucFirstName = name.charAt(0).toUpperCase() + name.slice(1);
@@ -124,7 +124,7 @@ exports.defineRegistryProperties = function (object, name, options = {}) {
 					}
 					return Promise.resolve(old);
 				};
-				
+
 				return options.willBeUnregistered ?
 					options.willBeUnregistered(old).then(cleanup) :
 					cleanup();
@@ -135,4 +135,8 @@ exports.defineRegistryProperties = function (object, name, options = {}) {
 	};
 
 	Object.defineProperties(object, properties);
+}
+
+export {
+	defineRegistryProperties
 };
