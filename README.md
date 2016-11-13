@@ -4,6 +4,7 @@
 [![bithound](https://www.bithound.io/github/arlac77/registry-mixin/badges/score.svg)](https://www.bithound.io/github/arlac77/registry-mixin)
 [![codecov.io](http://codecov.io/github/arlac77/registry-mixin/coverage.svg?branch=master)](http://codecov.io/github/arlac77/registry-mixin?branch=master)
 [![Code Climate](https://codeclimate.com/github/arlac77/registry-mixin/badges/gpa.svg)](https://codeclimate.com/github/arlac77/registry-mixin)
+[![Known Vulnerabilities](https://snyk.io/test/github/arlac77/registry-mixin/badge.svg)](https://snyk.io/test/github/arlac77/registry-mixin)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/registry-mixin.svg?style=flat-square)](https://github.com/arlac77/registry-mixin/issues)
 [![Dependency Status](https://david-dm.org/arlac77/registry-mixin.svg)](https://david-dm.org/arlac77/registry-mixin)
 [![devDependency Status](https://david-dm.org/arlac77/registry-mixin/dev-status.svg)](https://david-dm.org/arlac77/registry-mixin#info=devDependencies)
@@ -14,6 +15,31 @@
 registry-mixin
 ===
 Register objects and factories for later lookup
+
+# API Reference
+
+* <a name="defineRegistryProperties"></a>
+
+## defineRegistryProperties()
+Register named factories
+register<<Name>>(Factory)
+unregister<<Name>>(Factory)
+create<<Name>>InstanceNamed(name,...args)
+create<<Name>>Instance(config,...args) // config.type is the name
+<<Name>>[name] // lookup
+
+Format of the options
+{
+	'factoryType' : 'new'																// A key word which will call a constructor
+                 '<functionName>'										// a function name to call
+                 function(name, arg1, arg2, arg3){}  // A given function which will be called
+ willBeUnregistered(object) // called before unregistering object
+ hasBeenRegistered (object)  // called after registering object
+}
+
+**Kind**: global function  
+
+* * *
 
 install
 =======
