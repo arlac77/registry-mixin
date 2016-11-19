@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "cover": "npm run build && ./node_modules/istanbul/lib/cli.js cover --hook-run-in-context ./node_modules/mocha/bin/_mocha -- --R spec --U exports tests/*_test.js",
-    "build": "./node_modules/rollup/bin/rollup --format=cjs --output=dist/RegistryMixin.js -- src/RegistryMixin.js",
+    "build": "./node_modules/rollup/bin/rollup --output=dist/RegistryMixin.js -c -- src/RegistryMixin.js",
     "test": "npm run build && mocha tests/*_test.js && markdown-doctest",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "docs": "jsdoc2md -l off -t doc/README.hbs -f src/RegistryMixin.js > README.md"
@@ -33,15 +33,20 @@
     "rollup": "^0.36.3",
     "semantic-release": "^6.3.2",
     "jsdoc-to-markdown": "^2.0.1",
-    "markdown-doctest": "^0.9.0"
+    "markdown-doctest": "^0.9.0",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0"
   },
-  "contributors": [{
-    "name": "Torsten Link",
-    "email": "torstenlink@gmx.de"
-  }, {
-    "name": "Markus Felten",
-    "email": "markus.felten@gmx.de"
-  }],
+  "contributors": [
+    {
+      "name": "Torsten Link",
+      "email": "torstenlink@gmx.de"
+    },
+    {
+      "name": "Markus Felten",
+      "email": "markus.felten@gmx.de"
+    }
+  ],
   "license": "BSD-2-Clause",
   "engines": {
     "node": ">=6.9.1"
