@@ -3,7 +3,6 @@
   "version": "0.0.0-semantic-release",
   "description": "Register objects and factories for later lookup",
   "main": "dist/RegistryMixin.js",
-  "jsnext:main": "src/RegistryMixin.js",
   "module": "src/RegistryMixin.js",
   "keywords": [
     "lookup",
@@ -36,16 +35,13 @@
     "jsdoc-to-markdown": "^2.0.1",
     "markdown-doctest": "^0.9.0"
   },
-  "contributors": [
-    {
-      "name": "Torsten Link",
-      "email": "torstenlink@gmx.de"
-    },
-    {
-      "name": "Markus Felten",
-      "email": "markus.felten@gmx.de"
-    }
-  ],
+  "contributors": [{
+    "name": "Torsten Link",
+    "email": "torstenlink@gmx.de"
+  }, {
+    "name": "Markus Felten",
+    "email": "markus.felten@gmx.de"
+  }],
   "license": "BSD-2-Clause",
   "engines": {
     "node": ">=6.9.1"
