@@ -20,7 +20,7 @@
  * }
  *
  */
-function defineRegistryProperties(object, name, options = {}) {
+export function defineRegistryProperties(object, name, options = {}) {
 	const properties = {};
 
 	const ucFirstName = name.charAt(0).toUpperCase() + name.slice(1);
@@ -136,7 +136,3 @@ function defineRegistryProperties(object, name, options = {}) {
 
 	Object.defineProperties(object, properties);
 }
-
-export {
-	defineRegistryProperties
-};
