@@ -1,24 +1,33 @@
 {
   "name": "registry-mixin",
-  "version": "0.0.0-semantic-release",
-  "description": "Register objects and factories for later lookup",
-  "main": "dist/RegistryMixin.js",
-  "module": "src/RegistryMixin.js",
-  "keywords": [
-    "lookup",
-    "registry",
-    "mixin"
-  ],
   "scripts": {
+    "precover": "npm run prepublish",
     "cover": "nyc npm test",
-    "test": "mocha tests/*_test.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md",
-    "prepublish": "rollup --output=dist/RegistryMixin.js -c -- src/RegistryMixin.js",
     "pretest": "npm run prepublish",
+    "test": "mocha tests/*_test.js",
     "posttest": "markdown-doctest",
-    "precover": "npm run prepublish"
+    "prepublish": "rollup --output=dist/index.js -c -- {{module}}",
+    "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^3.0.0",
+    "markdown-doctest": "^0.9.1",
+    "chai": "^4.1.0",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
+    "rollup": "^0.45.1",
+    "semantic-release": "^6.3.6"
+  },
+  "engines": {
+    "node": ">=8.1.4"
+  },
+  "version": "0.0.0-semantic-release",
+  "description": "{{description}}",
+  "main": "dist/index.js",
+  "keywords": [
+    "npm-package-template"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arlac77/registry-mixin.git"
@@ -28,29 +37,13 @@
   },
   "homepage": "https://github.com/arlac77/registry-mixin#readme",
   "dependencies": {},
-  "devDependencies": {
-    "chai": "^4.1.0",
-    "mocha": "^3.4.2",
-    "rollup": "^0.45.1",
-    "semantic-release": "^6.3.6",
-    "jsdoc-to-markdown": "^3.0.0",
-    "markdown-doctest": "^0.9.1",
-    "nyc": "^11.0.3"
-  },
   "contributors": [
-    {
-      "name": "Torsten Link",
-      "email": "torstenlink@gmx.de"
-    },
     {
       "name": "Markus Felten",
       "email": "markus.felten@gmx.de"
     }
   ],
   "license": "BSD-2-Clause",
-  "engines": {
-    "node": ">=8.1.4"
-  },
   "nyc": {
     "include": [
       "dist/**/*.js"
