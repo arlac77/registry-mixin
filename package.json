@@ -35,7 +35,7 @@
     "semantic-release": "^6.3.6",
     "jsdoc-to-markdown": "^3.0.0",
     "markdown-doctest": "^0.9.1",
-    "nyc": "^11.0.3"
+    "nyc": "^11.1.0"
   },
   "contributors": [
     {
