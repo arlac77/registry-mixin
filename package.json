@@ -14,10 +14,10 @@
     "test": "mocha tests/*_test.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md",
-    "prepublish": "rollup --output=dist/RegistryMixin.js -c -- src/RegistryMixin.js",
-    "pretest": "npm run prepublish",
+    "pretest": "rollup -c",
     "posttest": "markdown-doctest",
-    "precover": "npm run prepublish"
+    "precover": "rollup -c",
+    "prepare": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
   "devDependencies": {
     "chai": "^4.1.1",
     "mocha": "^3.5.0",
-    "rollup": "^0.47.6",
+    "rollup": "^0.48.2",
     "semantic-release": "^7.0.2",
     "jsdoc-to-markdown": "^3.0.0",
     "markdown-doctest": "^0.9.1",
