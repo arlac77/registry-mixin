@@ -2,8 +2,8 @@
   "name": "registry-mixin",
   "version": "0.0.0-semantic-release",
   "description": "Register objects and factories for later lookup",
-  "main": "dist/RegistryMixin.js",
-  "module": "src/RegistryMixin.js",
+  "main": "dist/registry-mixin.js",
+  "module": "src/registry-mixin.js",
   "keywords": [
     "lookup",
     "registry",
@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "cover": "nyc npm test",
-    "test": "mocha tests/*_test.js",
+    "test": "mocha tests/*-test.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md",
     "pretest": "rollup -c",
