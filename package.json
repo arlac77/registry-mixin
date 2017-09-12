@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "cover": "nyc npm test",
-    "test": "mocha tests/*-test.js",
+    "test": "mocha tests/*_test.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md",
     "pretest": "rollup -c",
