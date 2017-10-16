@@ -41,23 +41,21 @@ export function defineRegistryProperties(object, name, options = {}) {
         options.factoryType === 'new'
           ? function(name, ...args) {
               const Clazz = registry[name];
-              if (Clazz) {
-                return new Clazz(...args);
-              } else {
+              if (Clazz === undefined) {
                 throw new Error(
                   `Could not find class '${name}' in registry '${ucFirstName}'`
                 );
               }
+              return new Clazz(...args);
             }
           : function(name, ...args) {
               const factory = registry[name];
-              if (factory) {
-                return factory[options.factoryMethod](...args);
-              } else {
+              if (factory === undefined) {
                 throw new Error(
                   `Could not find factory '${name}' in registry '${ucFirstName}'`
                 );
               }
+              return factory[options.factoryMethod](...args);
             }
     };
 
@@ -66,58 +64,56 @@ export function defineRegistryProperties(object, name, options = {}) {
         options.factoryType === 'new'
           ? function(identifier, ...args) {
               const Clazz = registry[identifier.type];
-              if (Clazz) {
-                return new Clazz(identifier, ...args);
-              } else {
+              if (Clazz === undefined) {
                 throw new Error(
                   `Could not find class '${identifier.type}' in registry '${ucFirstName}'`
                 );
               }
+              return new Clazz(identifier, ...args);
             }
           : function(identifier, ...args) {
               const factory = registry[identifier.type];
-              if (factory) {
-                return factory[options.factoryMethod](identifier, ...args);
-              } else {
+              if (factory === undefined) {
                 throw new Error(
                   `Could not find factory '${identifier.type}' in registry '${ucFirstName}'`
                 );
               }
+              return factory[options.factoryMethod](identifier, ...args);
             }
     };
   }
 
-  const registerFunction = (toBeRegistered, name) => {
+  async function registerFunction(toBeRegistered, name) {
     const old = registry[name];
     let p;
 
-    if (old) {
+    if (old === undefined) {
+      await toBeRegistered;
+    } else {
       if (old === toBeRegistered) {
-        return Promise.resolve(toBeRegistered);
+        return toBeRegistered;
       }
 
-      p = options.willBeUnregistered
-        ? options.willBeUnregistered(old)
-        : Promise.resolve();
-      if (options.withEvents) {
-        p = p.then(() => object.emit(eventNameUnRegistered, old));
+      if (options.willBeUnregistered !== undefined) {
+        await options.willBeUnregistered(old);
       }
-    } else {
-      p = Promise.resolve(toBeRegistered);
+
+      if (options.withEvents) {
+        object.emit(eventNameUnRegistered, old);
+      }
     }
 
     if (options.hasBeenRegistered) {
-      p = p.then(options.hasBeenRegistered(toBeRegistered));
+      options.hasBeenRegistered(toBeRegistered);
     }
 
-    return p.then(() => {
-      registry[name] = toBeRegistered;
-      if (options.withEvents) {
-        object.emit(eventNameRegistered, toBeRegistered);
-      }
-      return toBeRegistered;
-    });
-  };
+    registry[name] = toBeRegistered;
+    if (options.withEvents) {
+      object.emit(eventNameRegistered, toBeRegistered);
+    }
+
+    return toBeRegistered;
+  }
 
   properties['register' + ucFirstName + 'As'] = {
     value: registerFunction
