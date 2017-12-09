@@ -18,8 +18,6 @@
  *
  */
 export function defineRegistryProperties(object, name, options = {}) {
-  const properties = {};
-
   const ucFirstName = name.charAt(0).toUpperCase() + name.slice(1);
   const pluralLowercaseName = options.pluralName
     ? options.pluralName
@@ -29,9 +27,11 @@ export function defineRegistryProperties(object, name, options = {}) {
 
   const registry = {};
 
-  properties[pluralLowercaseName] = {
-    get: function() {
-      return registry;
+  const properties = {
+    [pluralLowercaseName]: {
+      get() {
+        return registry;
+      }
     }
   };
 
@@ -66,7 +66,9 @@ export function defineRegistryProperties(object, name, options = {}) {
               const Clazz = registry[identifier.type];
               if (Clazz === undefined) {
                 throw new Error(
-                  `Could not find class '${identifier.type}' in registry '${ucFirstName}'`
+                  `Could not find class '${
+                    identifier.type
+                  }' in registry '${ucFirstName}'`
                 );
               }
               return new Clazz(identifier, ...args);
@@ -75,7 +77,9 @@ export function defineRegistryProperties(object, name, options = {}) {
               const factory = registry[identifier.type];
               if (factory === undefined) {
                 throw new Error(
-                  `Could not find factory '${identifier.type}' in registry '${ucFirstName}'`
+                  `Could not find factory '${
+                    identifier.type
+                  }' in registry '${ucFirstName}'`
                 );
               }
               return factory[options.factoryMethod](identifier, ...args);
@@ -85,7 +89,6 @@ export function defineRegistryProperties(object, name, options = {}) {
 
   async function registerFunction(toBeRegistered, name) {
     const old = registry[name];
-    let p;
 
     if (old === undefined) {
       await toBeRegistered;
@@ -125,7 +128,7 @@ export function defineRegistryProperties(object, name, options = {}) {
   };
 
   properties['unregister' + ucFirstName] = {
-    value: function(name) {
+    value(name) {
       const old = registry[name];
 
       if (old !== undefined) {
