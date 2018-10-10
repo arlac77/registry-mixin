@@ -34,7 +34,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
-    "rollup": "^0.66.4",
+    "rollup": "^0.66.5",
     "semantic-release": "^15.9.17",
     "jsdoc-to-markdown": "^4.0.1",
     "markdown-doctest": "^0.9.1",
