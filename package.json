@@ -36,7 +36,7 @@
     "jsdoc-to-markdown": "^4.0.1",
     "markdown-doctest": "^0.9.1",
     "mocha": "^5.2.0",
-    "nyc": "^13.1.0",
+    "nyc": "^13.2.0",
     "rollup": "^1.1.0",
     "semantic-release": "^15.13.3"
   },
