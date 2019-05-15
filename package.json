@@ -33,12 +33,12 @@
   "dependencies": {},
   "devDependencies": {
     "chai": "^4.2.0",
-    "jsdoc-to-markdown": "^4.0.1",
+    "jsdoc-to-markdown": "^5.0.0",
     "markdown-doctest": "^0.9.1",
     "mocha": "^6.1.2",
     "nyc": "^14.1.1",
-    "rollup": "^1.11.3",
-    "semantic-release": "^15.13.13"
+    "rollup": "^1.12.0",
+    "semantic-release": "^15.13.14"
   },
   "engines": {
     "node": ">=8.11.4"
