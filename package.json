@@ -37,8 +37,8 @@
     "markdown-doctest": "^0.9.1",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
-    "rollup": "^1.19.4",
-    "semantic-release": "^15.13.19"
+    "rollup": "^1.20.0",
+    "semantic-release": "^15.13.21"
   },
   "engines": {
     "node": ">=10.16.1"
