@@ -5,26 +5,10 @@ branches:
     - /^greenkeeper/.*$/
     - /^mkpr/.*$/
     - /^npm-template-sync/.*$/
-notifications:
-  email:
-    - markus.felten@gmx.de
-before_install:
-  - npm i -g npm@latest
-before_script:
-  - npm prune
-  - npm install -g --production coveralls codecov
-after_script:
-  - codecov
-  - cat ./build/coverage/lcov.info | coveralls
-  - npm run docs
-after_success:
-  - npx semantic-release
 jobs:
   include:
     - stage: test
       node_js:
-        - '-10'
-        - '-12'
         - 12.12.0
       script:
         - npm run cover
