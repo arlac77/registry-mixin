@@ -1,4 +1,4 @@
-coverage
+
 build
 tests
 doc
@@ -6,11 +6,8 @@ doc
 *.tmp
 .test
 .tmp
-.gitignore
 .travis.yml
-.npmignore
 .vscode
+.DS_Store
 .nyc_output
 .markdown-doctest-setup.js
-rollup.config.js
-SUMMARY.md
