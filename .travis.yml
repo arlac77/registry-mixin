@@ -1,10 +1,10 @@
 language: node_js
-node_js:
-  - 12.12.0
 branches:
   only:
     - master
     - /^greenkeeper/.*$/
+    - /^mkpr/.*$/
+    - /^npm-template-sync/.*$/
 notifications:
   email:
     - markus.felten@gmx.de
@@ -13,11 +13,34 @@ before_install:
 before_script:
   - npm prune
   - npm install -g --production coveralls codecov
-script:
-  - npm run cover
 after_script:
   - codecov
   - cat ./build/coverage/lcov.info | coveralls
   - npm run docs
 after_success:
   - npx semantic-release
+jobs:
+  include:
+    - stage: test
+      node_js:
+        - '-10'
+        - '-12'
+        - 12.12.0
+      script:
+        - npm run cover
+        - npx codecov
+        - cat ./build/coverage/lcov.info | npx coveralls
+    - stage: doc
+      node_js: lts/*
+      skip_cleanup: 'true'
+      script:
+        - npm run lint
+        - npm run docs
+    - stage: release
+      node_js: lts/*
+      script: skip
+      deploy:
+        provider: script
+        skip_cleanup: 'true'
+        script:
+          - npx semantic-release
