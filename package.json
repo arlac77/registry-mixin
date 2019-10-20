@@ -64,18 +64,6 @@
       "tests/*-test.mjs"
     ]
   },
-  "nyc": {
-    "include": [
-      "dist/**/*.js"
-    ],
-    "reporter": [
-      "lcov"
-    ],
-    "report-dir": "./coverage"
-  },
-  "xo": {
-    "space": true
-  },
   "template": {
     "repository": {
       "url": "https://github.com/arlac77/npm-package-template-esm-only.git"
