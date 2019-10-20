@@ -68,8 +68,8 @@ test("empty", t => {
   t.deepEqual(object.interceptors, {});
 });
 
-test("class", t => {
-  testRegistry(t, "class", Interceptor, Interceptor2, {
+test("class", async t => {
+  await testRegistry(t, "class", Interceptor, Interceptor2, {
     withEvents: true,
     withCreateInstance: true,
     factoryType: "new",
@@ -82,23 +82,21 @@ test("class", t => {
   });
 });
 
-/*
-describe("RegistrarMixin", () => {
-  testRegistry("function", InterceptorFactory, InterceptorFactory2, {
+test("RegistrarMixin ", async t => {
+  await testRegistry(t, "function", InterceptorFactory, InterceptorFactory2, {
     withEvents: true,
     withCreateInstance: true,
     factoryType: "object",
     factoryMethod: "createInstance"
   });
 
-  testRegistry("function", InterceptorFactory, InterceptorFactory2, {
+  await testRegistry(t, "function", InterceptorFactory, InterceptorFactory2, {
     withEvents: false,
     withCreateInstance: true,
     factoryType: "object",
     factoryMethod: "createInstance"
   });
 });
-*/
 
 async function testRegistry(t, name, factory, factory2, registryOptions) {
   const object = new MyEmitter();
@@ -126,28 +124,25 @@ async function testRegistry(t, name, factory, factory2, registryOptions) {
     t.is(factory.hasBeenRegisteredCalled, true);
   }
 
+  t.is(object.interceptors.t1, factory);
+
+  const inst1 = object.createInterceptorInstance("t1", "arg1");
+  t.is(inst1.arg1, "arg1");
+
+  const inst2 = object.createInterceptorInstanceFromConfig(
+    {
+      type: "t1",
+      someOtherArgs: 1
+    },
+    "arg1"
+  );
+
+  t.is(inst2.arg1, "arg1");
+
+ // await object.unregisterInterceptor("txyz");
+
   /*
-      it("has one entry", () => assert.equal(object.interceptors.t1, factory));
-      describe("create instance", () => {
-        const inst1 = object.createInterceptorInstance("t1", "arg1");
-        it("created", () => assert.equal(inst1.arg1, "arg1"));
-      });
-
-      describe("create instance from config", () => {
-        const inst1 = object.createInterceptorInstanceFromConfig(
-          {
-            type: "t1",
-            someOtherArgs: 1
-          },
-          "arg1"
-        );
-        it("created", () => assert.equal(inst1.arg1, "arg1"));
-      });
-
       describe("unregister", () => {
-        it("nonexisting entry", done => {
-          object.unregisterInterceptor("txyz").then(done, () => done());
-        });
 
         it("entry removed", done => {
           let unregistered;
