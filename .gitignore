@@ -1,12 +1,9 @@
-coverage
-package-lock.json
+
 node_modules
 build
-dist
-out
 *.log
 *.dump
+*.node
 .DS_Store
-.nyc_output
 .test
 .tmp
