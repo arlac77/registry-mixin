@@ -1,0 +1,10 @@
+{
+  "name": "registry-mixin",
+  "description": "Register objects and factories for later lookup",
+  "icons": [
+    {
+      "src": "facicon.ico",
+      "sizes": "16x16"
+    }
+  ]
+}
