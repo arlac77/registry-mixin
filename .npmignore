@@ -9,5 +9,4 @@ doc
 .travis.yml
 .vscode
 .DS_Store
-.nyc_output
 .markdown-doctest-setup.js
