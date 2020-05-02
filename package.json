@@ -8,7 +8,8 @@
   "type": "module",
   "main": "src/registry-mixin.mjs",
   "exports": {
-    ".": "./src/registry-mixin.mjs"
+    ".": "./src/registry-mixin.mjs",
+    "./": "./"
   },
   "description": "Register objects and factories for later lookup",
   "keywords": [
