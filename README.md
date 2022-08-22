@@ -42,8 +42,8 @@ hasBeenRegistered (object)  // called after registering object
 
 ### Parameters
 
-*   `object`  
-*   `name`  
+*   `object` &#x20;
+*   `name` &#x20;
 *   `options`   (optional, default `{}`)
 
 # install
